@@ -1,0 +1,35 @@
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+        <li class="nav-item">
+          <a class="nav-link"
+             th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/dashboard')} ? ' active' : ''"
+             href="/dashboard">Beranda</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"
+             th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/dashboard/device')} ? ' active' : ''"
+             href="/dashboard/device">Perangkat</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"
+             th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/dashboard/about')} ? ' active' : ''"
+             href="/dashboard/about">Tentang Kami</a>
+        </li>
+
+        <!-- <li class="nav-item"><a class="nav-link" href="#">Masuk</a></li> -->
+        <li class="nav-item d-flex align-items-center">
+          <span class="text-white me-1">Hi,</span>
+          <a class="nav-link fw-bold hi-user p-0" th:text="${user.username ?: 'User'}" href="#"></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
