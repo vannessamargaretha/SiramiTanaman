@@ -21,7 +21,6 @@ public class UserService {
     }
 
     public User registerUser(User user) {
-        // TODO: hash password later using BCrypt
         return userRepository.save(user);
     }
 }

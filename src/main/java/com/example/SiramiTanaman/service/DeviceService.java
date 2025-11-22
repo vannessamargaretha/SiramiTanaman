@@ -44,4 +44,13 @@ public class DeviceService {
     public void deleteDevice(Long id) {
         deviceRepository.deleteById(id);
     }
+
+    public void updateMode(Long deviceId, boolean manualMode) {
+    Device device = deviceRepository.findById(deviceId)
+            .orElseThrow(() -> new RuntimeException("Device not found"));
+
+    device.setManualMode(manualMode);
+    deviceRepository.save(device);
+}
+
 }

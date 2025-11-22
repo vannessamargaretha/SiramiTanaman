@@ -24,10 +24,14 @@ public class Device {
     @Enumerated(EnumType.STRING)
     private DeviceStatus status;
 
+    @Column(name = "manual_mode")
+    private Boolean manualMode;
+
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    // Bi-directional relations
+    
     @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SensorData> sensorDataList;
 

@@ -28,10 +28,10 @@ public class LoginController {
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("user", new User());
-        return "auth/register"; // templates/auth/register.html
+        return "auth/register";
     }
 
-    // POST - Register form submission
+    
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, Model model) {
         if (userService.existsByUsername(user.getUsername())) {
@@ -39,7 +39,7 @@ public class LoginController {
             return "auth/register";
         }
 
-        userService.registerUser(user); // ✅ uses your existing service
+        userService.registerUser(user); 
         model.addAttribute("success", "Akun berhasil dibuat. Silakan login.");
 
         return "redirect:/login";

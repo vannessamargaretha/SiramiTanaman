@@ -9,11 +9,11 @@
 
     <style>
         :root {
-            --green-900: #0b5d43;   /* navbar / strong accents */
-            --green-700: #2b7a54;   /* headings / buttons */
-            --green-400: #3e9f78;   /* pills */
-            --green-200: #e8f5ef;   /* light bg */
-            --green-100: #f4fbf7;   /* card bg */
+            --green-900: #0b5d43;   
+            --green-700: #2b7a54;   
+            --green-400: #3e9f78;   
+            --green-200: #e8f5ef;   
+            --green-100: #f4fbf7;   
             --text-900: #1f3c2e;
         }
 
@@ -23,13 +23,13 @@
             font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         }
 
-        /* Page title */
+        
         .page-title {
             font-weight: 800;
             color: var(--green-700);
         }
 
-        /* --- Metric cards --- */
+        
         .metric {
             background: var(--green-900);
             border-radius: 14px;
@@ -66,7 +66,7 @@
             margin: 0;
         }
 
-        /* --- Buttons --- */
+        
         .action-row .btn {
             font-weight: 700;
             border-radius: 12px;
@@ -94,7 +94,7 @@
             color: #fff;
         }
 
-        /* --- IoT Panel --- */
+        
         .iot-panel {
             background: var(--green-100);
             border: 2px solid var(--green-700);
@@ -108,7 +108,7 @@
             font-size: .9rem;
         }
 
-        /* --- Mode Header --- */
+        
         .mode-header {
             display: flex;
             align-items: center;
@@ -126,7 +126,7 @@
             font-size: 1rem;
         }
 
-        /* --- Custom Toggle Switch (Figma style) --- */
+        
         .switch {
             position: relative;
             display: inline-block;
@@ -171,7 +171,7 @@
             transform: translateX(22px);
         }
 
-        /* --- Mode Body Animation --- */
+        
         .mode-body {
             overflow: hidden;
             max-height: 0;
@@ -181,10 +181,10 @@
 
         .mode-body.show {
             opacity: 1;
-            max-height: 1000px; /* enough space for full content */
+            max-height: 1000px; 
         }
 
-        /* --- Custom condition pills --- */
+        
         .pill {
             display: inline-flex;
             align-items: center;
@@ -206,7 +206,7 @@
             text-align: center;
         }
 
-        /* --- Chart container --- */
+        
         .chart-wrap {
             background: var(--green-100);
             border: 2px solid var(--green-700);
@@ -223,7 +223,7 @@
             background: var(--green-200);
         }
 
-        /* --- Navbar --- */
+        
         .navbar-custom {
             background-color: var(--green-900) !important;
             padding: 0.75rem 1rem;
@@ -250,24 +250,22 @@
 </head>
 
 <body>
-    <!-- Use your global navbar fragment -->
+    
     <div th:replace="fragments/navbar :: navbar"></div>
 
     <div class="container my-4">
 
-        <!-- Title -->
+        
         <h2 class="page-title mb-3" th:text="'Perangkat ' + (${device.id}?:1) + ' : ' + (${device.name}?:'Tanaman Melon')">
             Perangkat 1 : Tanaman Melon
         </h2>
 
-        <!-- Metrics -->
+        
         <div class="row g-3 mb-3">
         <div class="col-12 col-md-4">
             <div class="metric">
             <div class="p-2"><span class="metric-head">Kelembaban Tanah</span></div>
-            <!-- <img class="metric-img" th:src="@{/img/soil.jpg}"
-                onerror="this.src='https://images.unsplash.com/photo-1525715843408-5c6ec44503b5?q=80&w=1200&auto=format&fit=crop';"
-                alt="Soil" /> -->
+           
             <div class="metric-body text-center">
                 <p class="metric-value" th:text="${#lists.isEmpty(sensorData) ? '– %' : sensorData.get(0).soilMoisture + ' %'}">25 %</p>
             </div>
@@ -276,9 +274,7 @@
         <div class="col-12 col-md-4">
             <div class="metric">
             <div class="p-2"><span class="metric-head">Suhu Udara</span></div>
-            <!-- <img class="metric-img" th:src="@{/img/sky.jpg}"
-                onerror="this.src='https://images.unsplash.com/photo-1502920917128-1aa500764cbd?q=80&w=1200&auto=format&fit=crop';"
-                alt="Sky" /> -->
+            
             <div class="metric-body text-center">
                 <p class="metric-value" th:text="${#lists.isEmpty(sensorData) ? '– °C' : sensorData.get(0).airHumidity + ' °C'}">29 °C</p>
             </div>
@@ -287,9 +283,7 @@
         <div class="col-12 col-md-4">
             <div class="metric">
             <div class="p-2"><span class="metric-head">Intensitas Cahaya</span></div>
-            <!-- <img class="metric-img" th:src="@{/img/light.jpg}"
-                onerror="this.src='https://images.unsplash.com/photo-1504198453319-5ce911bafcde?q=80&w=1200&auto=format&fit=crop';"
-                alt="Light" /> -->
+           
             <div class="metric-body text-center">
                 <p class="metric-value" th:text="${#lists.isEmpty(sensorData) ? '– lux' : sensorData.get(0).lightIntensity + ' lux'}">30 lux</p>
             </div>
@@ -297,11 +291,12 @@
         </div>
         </div>
 
-        <!-- Action buttons -->
+        
         <div class="action-row d-flex flex-column flex-md-row gap-3 mb-4">
         <form th:action="@{'/api/device/' + ${device.id} + '/command'}" method="post" class="flex-fill">
             <input type="hidden" name="type" value="watering" />
             <input type="hidden" name="value" value="100" />
+            <input type="hidden" name="override" value="true" />
             <input type="hidden" name="durationSeconds" value="60" />
             <button type="submit" class="btn btn-green w-100">💧 Tekan untuk siram selama 1 menit</button>
         </form>
@@ -309,18 +304,19 @@
         <form th:action="@{'/api/device/' + ${device.id} + '/command'}" method="post" class="flex-fill">
             <input type="hidden" name="type" value="lighting" />
             <input type="hidden" name="value" value="100" />
-            <input type="hidden" name="durationSeconds" value="1800" />
-            <button type="submit" class="btn btn-emerald w-100">❄️ Tekan untuk menyalakan lampu dengan durasi 30 menit</button>
+            <input type="hidden" name="override" value="true" />
+            <input type="hidden" name="durationSeconds" value="60" />
+            <button type="submit" class="btn btn-emerald w-100">❄️ Tekan untuk menyalakan lampu dengan durasi 1 menit</button>
         </form>
         </div>
 
-        <!-- IoT Modes -->
+        
         <p class="subnote mb-2">
             Mode IoT — Ketika IoT baru aktif akan berada dalam Mode Otomatis. Kamu dapat mengubah ke Mode Pengaturan Pengguna
             untuk kostumisasi IoT.
         </p>
 
-        <!-- MODE OTOMATIS -->
+        
         <div class="iot-panel mb-3">
         <div class="mode-header">
             <label class="switch">
@@ -348,7 +344,7 @@
         </div>
         </div>
 
-        <!-- MODE KUSTOMISASI -->
+        
         <div class="iot-panel mb-4">
         <div class="mode-header">
             <label class="switch">
@@ -369,12 +365,14 @@
             dengan umur, jenis, dan usia tanaman.
             </p>
         </div>
+        <button id="saveSettingsBtn" class="btn btn-primary mt-2">Simpan Pengaturan</button>
+
         </div>
 
 
 
 
-        <!-- Chart -->
+        
         <div class="chart-wrap mb-4">
             <h5 class="chart-title mb-2">Grafik Penyiraman dan Pencahayaan 7 Hari Ke Belakang</h5>
             <div style="height:320px;"><canvas id="sensorChart"></canvas></div>
@@ -385,13 +383,18 @@
     <div class="mt-5"></div>
     <div th:replace="fragments/footer :: footer"></div>
 
-    <!-- Chart + toggles -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script th:inline="javascript">
     /*<![CDATA[*/
     const sensorData = /*[[${sensorData}]]*/ [];
     /*]]>*/
+
+
+    document.getElementById("saveSettingsBtn").addEventListener("click", () => {
+        const deviceId = 1; 
+        saveCustomSettings(deviceId);
+    });
 
     document.addEventListener("DOMContentLoaded", () => {
         const ctx = document.getElementById("sensorChart").getContext("2d");
@@ -464,9 +467,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
-        // ==========================
-        // === IoT Mode Toggles ===
-        // ==========================
+       
         const autoSwitch = document.getElementById('autoSwitch');
         const customSwitch = document.getElementById('customSwitch');
         const autoBody = document.getElementById('autoBody');
@@ -499,13 +500,43 @@
         autoSwitch.addEventListener('change', () => syncModes('auto'));
         customSwitch.addEventListener('change', () => syncModes('custom'));
 
+        autoSwitch.addEventListener("change", () => {
+            const manualMode = !autoSwitch.checked;  
+           
+
+            fetch(`/api/device/1/mode`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ manualMode })
+            })
+            .then(res => res.json())
+            .then(data => console.log("Mode updated:", data))
+            .catch(err => console.error("Error updating mode:", err));
+        });
+
+        customSwitch.addEventListener("change", () => {
+            const manualMode = customSwitch.checked; 
+
+            
+            if (customSwitch.checked) {
+                autoSwitch.checked = false;
+            }
+
+            fetch(`/api/device/1/mode`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ manualMode })
+            })
+            .then(res => res.json())
+            .then(data => console.log("Mode updated:", data))
+            .catch(err => console.error("Error updating mode:", err));
+        });
+
+
+
         syncModes();
 
 
-
-        // ==========================
-        // === Sensor Chart ===
-        // ==========================
         const sensorData = /*[[${sensorData}]]*/ [];
 
             if (Array.isArray(sensorData) && sensorData.length > 0) {
@@ -572,6 +603,45 @@
         }
 
         });
+
+
+        function getCustomThresholds() {
+    const inputs = customBody.querySelectorAll("input[type='number']");
+    return {
+        soilMin: parseInt(inputs[0].value),
+        tempPump: parseInt(inputs[1].value),
+        luxMin: parseInt(inputs[2].value)
+        // Add soilMax, tempLightOff, luxMax, lightDuration, lightInterval if needed
+    };
+}
+
+async function saveCustomSettings(deviceId) {
+    if (!customSwitch.checked) {
+        alert("Aktifkan Mode Kustomisasi terlebih dahulu!");
+        return;
+    }
+
+    const payload = getCustomThresholds();
+
+    try {
+        const response = await fetch(`/api/device/${deviceId}/settings`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        if (data.status === "success") {
+            alert("Pengaturan berhasil disimpan!");
+        } else {
+            alert("Gagal menyimpan pengaturan");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Terjadi kesalahan saat menghubungi server");
+    }
+}
+
     </script>
 
 

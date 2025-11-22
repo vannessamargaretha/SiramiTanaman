@@ -42,7 +42,7 @@ public class DashboardController {
     private final SensorDataService sensorDataService;
     private final DeviceCommandService deviceCommandService;
 
-    // === Dashboard Home ===
+    
     @GetMapping
     public String viewDashboard(Model model, Principal principal) {
         String username = principal != null ? principal.getName() : "Guest";
@@ -53,11 +53,11 @@ public class DashboardController {
         model.addAttribute("user", user);
         model.addAttribute("devices", devices);
 
-        // Use the first device for the homepage history section (adjust as you wish)
+        
         Device device = devices.isEmpty() ? null : devices.get(0);
         model.addAttribute("firstDeviceName", device != null ? device.getName() : "Tanaman Buah Melon");
 
-        // Build ISO-8601 (+07:00) timestamps list
+        
         ZoneId zone = ZoneId.of("Asia/Jakarta");
         Function<DeviceCommand, String> toIso =
                 c -> c.getCreatedAt().atZone(zone).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
@@ -72,7 +72,7 @@ public class DashboardController {
                                             .stream().map(toIso).toList();
         }
 
-        // Fallback dummy data if empty
+        
         if (wateringTs.isEmpty()) {
             ZonedDateTime base = ZonedDateTime.now(zone).withMinute(0).withSecond(0).withNano(0);
             wateringTs = List.of(
@@ -101,7 +101,7 @@ public class DashboardController {
     }
 
 
-    // === Device Detail ===
+    
     @GetMapping("/device/{id}")
     public String viewDevice(@PathVariable Long id, Model model, Principal principal) {
         String username = principal != null ? principal.getName() : "Guest";
@@ -120,11 +120,11 @@ public class DashboardController {
                     return dummy;
                 });
 
-        // fetch real sensor data
+        
         SensorData latestData = sensorDataService.getLatestReading(device);
         List<SensorData> historyData = sensorDataService.getLatestSensorData(device);
 
-        // reverse for chronological order (oldest → newest)
+        
         Collections.reverse(historyData);
 
         model.addAttribute("device", device);
@@ -147,12 +147,13 @@ public class DashboardController {
         model.addAttribute("sensorData", sensorList);
 
 
-        // model.addAttribute("sensorData", historyData);
+        
         model.addAttribute("commands", List.of());
 
-        return "device-detail"; // templates/device-detail.html
+        return "device-detail"; 
     }
-    // === Tentang Kami ===
+    
+
     @GetMapping("/about")
     public String about(Principal principal, Model model) {
         
@@ -165,7 +166,7 @@ public class DashboardController {
         return "tentang-kami";
     }
 
-    // === Device List ===
+    
     @GetMapping("/device")
     public String listDevices(Model model, Principal principal) {
         
@@ -177,11 +178,11 @@ public class DashboardController {
 
         var devices = deviceService.getAllDevices(); 
         model.addAttribute("devices", devices);
-        return "device-list"; // templates/device-list.html
+        return "device-list"; 
     }
 
 
-    // === Add Device ===
+    
     @PostMapping("/device/add")
     public String addDevice(@RequestParam String name,
                             @RequestParam String location) {
@@ -196,7 +197,7 @@ public class DashboardController {
         return "redirect:/dashboard";
     }
 
-    // === Delete Device ===
+    
     @PostMapping("/device/{id}/delete")
     public String deleteDevice(@PathVariable Long id) {
         deviceService.deleteDevice(id);

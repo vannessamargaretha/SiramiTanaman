@@ -22,22 +22,22 @@ public class DeviceCommand {
     private Device device;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "command_type")
-    private CommandType commandType;
+    @Column(name = "command_type", nullable = false)
+    private CommandType commandType; 
 
-    private Float value; // 0–100
+    @Column(name = "value")
+    private Float value;
 
-    private Boolean overrideMode;
+    @Column(name = "override_mode", nullable = false)
+    private boolean overrideMode;
 
-    private Boolean sent;
+    @Column(name = "sent")
+    private boolean sent;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-        if (overrideMode == null) overrideMode = false;
-        if (sent == null) sent = false;
-    }
+    @Column(name = "duration_seconds")
+    private Integer durationSeconds;
+
 }
