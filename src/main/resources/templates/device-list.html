@@ -70,36 +70,55 @@
             text-decoration: underline;
             text-underline-offset: 5px;
         }
+        html, body {
+        height: 100%;
+        }
+
+        body {
+        display: flex;
+        flex-direction: column;
+        }
+        .page-wrapper {
+        min-height: 100vh;         /* Isi halaman minimal setinggi layar */
+        display: flex;
+        flex-direction: column;
+        }
+
+.page-content {
+    flex: 1;                   /* Isi halaman mengisi ruang kosong */
+}
+
+
+footer {
+    margin-top: auto;
+}
   </style>
 </head>
 
 <body>
-    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="page-wrapper">
 
-    <div class="container my-4">
-        <h3 class="page-title mb-3">Data Perangkat</h3>
+        <div th:replace="fragments/navbar :: navbar"></div>
 
-        
-        <div th:if="${devices != null}">
-            <div th:each="device, iterStat : ${devices}">
-                <div class="device-card"
-                    th:onclick="'window.location.href=\'/dashboard/device/' + ${device.id} + '\''"
-                    style="cursor:pointer;">
-                <h6 th:text="'Perangkat ' + ${iterStat.index + 1} + ' :'">Perangkat 1 :</h6>
-                <p th:text="${device.name}">Tanaman Melon Ngawi</p>
+        <div class="container my-4 page-content">
+            <h3 class="page-title mb-3">Data Perangkat</h3>
+
+            <div th:if="${devices != null}">
+                <div th:each="device, iterStat : ${devices}">
+                    <div class="device-card"
+                        th:onclick="'window.location.href=\'/dashboard/device/' + ${device.id} + '\''"
+                        style="cursor:pointer;">
+                        <h6 th:text="'Perangkat ' + ${iterStat.index + 1} + ' :'"></h6>
+                        <p th:text="${device.name}"></p>
+                    </div>
                 </div>
             </div>
         </div>
 
-
-        
-        <!-- <form th:action="@{/dashboard/device/add}" method="post" class="mt-3 d-flex justify-content-end">
-        <button type="submit" class="btn-add">
-            <i class="bi bi-plus-circle me-1"></i> Tambahkan perangkat baru
-        </button>
-        </form> -->
     </div>
 
+    <!-- Footer tetap di luar wrapper -->
     <div th:replace="fragments/footer :: footer"></div>
 </body>
+
 </html>

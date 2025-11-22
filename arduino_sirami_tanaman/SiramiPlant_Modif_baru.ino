@@ -204,13 +204,13 @@ void loop() {
   if (!pumpOverrideActive) {
     if (((soilPercent > soilMin) || (temperature > tempPump)) && (soilPercent < soilMax)) {
       digitalWrite(PUMP_PIN, HIGH);
-      Serial.println("💧 Pompa: ON");
+      Serial.println("Pompa: ON");
     } else if (((soilPercent == 0) || (temperature > tempPump)) && (soilPercent < soilMax)) {
       digitalWrite(PUMP_PIN, HIGH);
-      Serial.println("💧 Pompa: ON");
+      Serial.println("Pompa: ON");
     } else {
       digitalWrite(PUMP_PIN, LOW);
-      Serial.println("💧 Pompa: OFF");
+      Serial.println("Pompa: OFF");
     }
   }
 
@@ -220,10 +220,10 @@ void loop() {
 
     if (temperature > tempLightOff || lux > luxMax) {
       digitalWrite(LIGHT_PIN, HIGH);
-      Serial.println("💡 Light: OFF (too hot/bright)");
+      Serial.println("Light: OFF (too hot/bright)");
     } else {
       digitalWrite(LIGHT_PIN, LOW);
-      Serial.println("💡 Light: ON (smart)");
+      Serial.println("Light: ON (smart)");
     }
 
   }
@@ -234,14 +234,14 @@ void loop() {
       digitalWrite(LIGHT_PIN, HIGH); 
       lightActive = false;
       lastLightOn = now;
-      Serial.println("💡 Growlight: OFF (1 jam selesai)");
+      Serial.println("Growlight: OFF (1 jam selesai)");
   }
 
   
   if (!lightOverrideActive && (temperature > tempLightOff || lux > luxMax)) {
       digitalWrite(LIGHT_PIN, HIGH); 
       lightActive = false;
-      Serial.println("💡 Growlight: OFF (karena panas/terang)");
+      Serial.println("Growlight: OFF (karena panas/terang)");
   }
 
 
@@ -311,10 +311,10 @@ void fetchCommandsAndApply() {
 
       if (waterValue > 0) {
           digitalWrite(PUMP_PIN, HIGH);
-          Serial.println("💧 Pump: ON (override)");
+          Serial.println("Pump: ON (override)");
       } else {
           digitalWrite(PUMP_PIN, LOW);
-          Serial.println("💧 Pump: OFF (override)");
+          Serial.println("Pump: OFF (override)");
       }
   }
 
@@ -331,10 +331,10 @@ void fetchCommandsAndApply() {
 
       if (lightValue > 0) {
           digitalWrite(LIGHT_PIN, LOW);
-          Serial.println("💡 Light: ON (override)");
+          Serial.println("Light: ON (override)");
       } else {
           digitalWrite(LIGHT_PIN, HIGH);
-          Serial.println("💡 Light: OFF (override)");
+          Serial.println("Light: OFF (override)");
       }
   }
 
@@ -348,7 +348,7 @@ void handleOverrideExpiry() {
     if (pumpOverrideActive && now >= pumpOverrideEnd) {
         pumpOverrideActive = false;
         digitalWrite(PUMP_PIN, LOW);
-        Serial.println("💧 Pump override ended → Returning to normal logic");
+        Serial.println("Pump override ended → Returning to normal logic");
 
         if (WiFi.status() == WL_CONNECTED) {
             HTTPClient http;
@@ -362,7 +362,7 @@ void handleOverrideExpiry() {
     if (lightOverrideActive && now >= lightOverrideEnd) {
         lightOverrideActive = false;
         digitalWrite(LIGHT_PIN, LOW);
-        Serial.println("💡 Light override ended → Returning to normal logic");
+        Serial.println("Light override ended → Returning to normal logic");
 
         if (WiFi.status() == WL_CONNECTED) {
             HTTPClient http;
